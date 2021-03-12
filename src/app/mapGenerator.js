@@ -8,7 +8,6 @@ class Hex {
 }
 
 export function generateMap(radius) {
-    debugger
     let map = []
     let map_radius = radius - 1
     for (let q = -map_radius; q <= map_radius; q++) {
@@ -26,7 +25,6 @@ export function generateMap(radius) {
 }
 
 export function mapToColumns(map, radius) {
-    debugger
     let q = -radius + 1
     let columns = [];
     for (q; q < radius; q++) {
@@ -67,14 +65,12 @@ export function notEmptyCeels(map) {
     return ceels
 }
 
-export function addCeelsOnMap(map, ceels) {
-    ceels.forEach(cell => {
+export function addCeelsOnMap(map, cells) {
+    cells.forEach(cell => {
         return map.map(column => column.map(item => {
             if (item.x === cell.x && item.y === cell.y)
                 return item.value = cell.value
         }))
     })
-    console.log("map")
-    console.log(map)
     return map
 }
