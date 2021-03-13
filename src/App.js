@@ -21,7 +21,6 @@ export default function App() {
 
     return (
         <Container>
-            {console.log("render app")}
             <button onClick={() => radiusClick(2)}>2</button>
             <button onClick={() => radiusClick(3)}>3</button>
             <button onClick={() => radiusClick(4)}>4</button>

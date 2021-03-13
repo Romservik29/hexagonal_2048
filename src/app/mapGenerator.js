@@ -19,49 +19,13 @@ export function generateMap(radius) {
         }
         map.push(column)
     }
-    console.log("map generated")
-    console.log(map)
     return map
-}
-
-export function mapToColumns(map, radius) {
-    let q = -radius + 1
-    let columns = [];
-    for (q; q < radius; q++) {
-        columns
-            .push(
-                map
-                    .filter(item => item.x === q)
-                    .sort((a, b) => {
-                        if (a.x < 0) {
-                            if (a.y < b.y) return 1
-                            else return -1
-                        }
-                        else return 1
-                    }
-                    )
-            )
-
-    }
-    return columns
-}
-
-export function columnsToMap(columns) {
-    let map = [];
-    for (let i = 0; i < columns.length; i++) {
-        for (let j = 0; j < columns[i].length; j++) {
-            map.push(columns[i][j])
-        }
-    }
-    return map;
 }
 
 export function notEmptyCeels(map) {
     let ceels = []
     let currentMap = map
     currentMap.filter(column => column.map(item => item.value !== 0 ? ceels.push(item) : false))
-    console.log("ceels")
-    console.log(ceels)
     return ceels
 }
 
@@ -74,3 +38,13 @@ export function addCeelsOnMap(map, cells) {
     })
     return map
 }
+
+// export function columnsToMap(columns) {
+//     let map = [];
+//     for (let i = 0; i < columns.length; i++) {
+//         for (let j = 0; j < columns[i].length; j++) {
+//             map.push(columns[i][j])
+//         }
+//     }
+//     return map;
+// }
