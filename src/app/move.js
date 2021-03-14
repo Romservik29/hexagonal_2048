@@ -1,7 +1,8 @@
-export const sumUp = (columns,switcher) => {    
+// move and sum cells in up the axis X
+export const sumUp = (columns, switcher) => {
     for (let i = 0; i < columns.length; i++) {
-        move(columns,switcher)
-        for (let j = 0; j < columns[i].length; j++) {
+        move(columns, switcher)
+        for (let j = 0; j < columns[i].length - 1; j++) {
             if (columns[i][j] !== undefined && columns[i][j + 1]) {
                 if (columns[i][j].value === columns[i][j + 1].value) {
                     columns[i][j].value *= 2
@@ -12,15 +13,69 @@ export const sumUp = (columns,switcher) => {
     }
     return columns
 }
-export const sumDown = (columns,switcher) => {
+// move and sum cells in down the axis X
+export const sumDown = (columns, switcher) => {
     for (let i = 0; i < columns.length; i++) {
-        columns = move(columns,switcher)
+        columns = move(columns, switcher)
         for (let j = columns[i].length - 1; j > 0; j--) {
             if (columns[i][j] !== undefined && columns[i][j - 1]) {
                 if (columns[i][j].value === columns[i][j - 1].value) {
                     columns[i][j].value *= 2
                     columns[i][j - 1].value = 0
-
+                }
+            }
+        }
+    }
+    return columns
+}
+// move and sum cells in up the axis Y|Z
+export const sumRUp = (columns, switcher) => {
+    console.log("columns")
+    console.log(columns)
+    for (let i = Math.ceil(columns.length / 2); i < columns.length; i++) {
+        move(columns, switcher)
+        for (let j = 0; j < columns[i].length - 1; j++) {
+            if (columns[i][j] !== undefined && columns[i][j + 1]) {
+                if (columns[i][j].value === columns[i][j + 1].value) {
+                    columns[i][j].value *= 2
+                    columns[i][j + 1].value = 0
+                }
+            }
+        }
+    }
+    for (let i = 0; i < Math.ceil(columns.length / 2); i++) {
+        columns = move(columns, switcher)
+        for (let j = columns[i].length - 1; j > 0; j--) {
+            if (columns[i][j] !== undefined && columns[i][j - 1]) {
+                if (columns[i][j].value === columns[i][j - 1].value) {
+                    columns[i][j].value *= 2
+                    columns[i][j - 1].value = 0
+                }
+            }
+        }
+    }
+    return columns
+}
+// move and sum cells in up the axis Y|Z
+export const sumLDown = (columns, switcher) => {
+    for (let i = 0; i < Math.sign(columns.length / 2); i++) {
+        move(columns, switcher)
+        for (let j = columns[i].length - 1; j > 0; j--) {
+            if (columns[i][j] !== undefined && columns[i][j - 1]) {
+                if (columns[i][j].value === columns[i][j - 1].value) {
+                    columns[i][j].value *= 2
+                    columns[i][j - 1].value = 0
+                }
+            }
+        }
+    }
+    for (let i = Math.sign(columns.length / 2); i < columns.length; i++) {
+        columns = move(columns, switcher)
+        for (let j = 0; j < columns[i].length - 1; j++) {
+            if (columns[i][j] !== undefined && columns[i][j + 1]) {
+                if (columns[i][j].value === columns[i][j + 1].value) {
+                    columns[i][j].value *= 2
+                    columns[i][j + 1].value = 0
                 }
             }
         }
@@ -28,33 +83,33 @@ export const sumDown = (columns,switcher) => {
     return columns
 }
 
-export const moveRightUp = (columns, radius) => {
-    let newColumns = changeDim(columns, radius, 'z')
-    newColumns = sumDown(newColumns, 0);
-    newColumns = changeDim(columns, radius, 'x')
-    return newColumns
-}
-export const moveLeftUp = (columns, radius) => {
+export const sumRightUp = (columns, radius) => {
+    console.log('click')
     let newColumns = changeDim(columns, radius, 'y')
-    newColumns = sumUp(newColumns, 1);
+    newColumns = sumRUp(newColumns, 0);
     newColumns = changeDim(columns, radius, 'x')
     return newColumns
 }
-
-export const moveRightDown = (columns, radius) => {
+export const sumLeftDown = (columns, radius) => {
+    console.log('click')
     let newColumns = changeDim(columns, radius, 'y')
-    newColumns = sumUp(newColumns,0);
+    newColumns = sumLDown(newColumns, 1);
     newColumns = changeDim(columns, radius, 'x')
     return newColumns
 }
-
-export const moveLeftDown = (columns, radius) => {
+export const sumLeftUp = (columns, radius) => {
     let newColumns = changeDim(columns, radius, 'z')
-    newColumns = sumUp(newColumns, 1);
+    newColumns = sumLDown(newColumns, 1);
     newColumns = changeDim(columns, radius, 'x')
     return newColumns
 }
-
+export const sumRightDown = (columns, radius) => {
+    let newColumns = changeDim(columns, radius, 'z')
+    newColumns = sumRUp(newColumns, 0);
+    newColumns = changeDim(columns, radius, 'x')
+    return newColumns
+}
+// move cell
 export const move = (columns, switcher) => {
     if (switcher === 1) {
         for (let i = 0; i < columns.length; i++) {
@@ -84,8 +139,8 @@ export const move = (columns, switcher) => {
     }
     return columns
 }
-
-function changeDim(columns, radius, dim) {
+// Change dimension on x,y,z
+export function changeDim(columns, radius, dim) {
     let q = -radius + 1
     let newColumns = [];
 
@@ -109,41 +164,44 @@ function changeDim(columns, radius, dim) {
             .push(createColumn(columns, q, dim))
 
     }
-    for (let i = 0; i < newColumns.length; i++) {
+    //reverse column r > 0
+    /*for (let i = 0; i < newColumns.length; i++) {
         if (i + (-radius + 1) > 0) {
             if (dim === 'x') {
                 newColumns[i].sort((a, b) => {
                     newColumns.forEach(column => column.sort((a, b) => {
-                        if (a.y > b.y) return 1
+                        if (a.y < b.y) return 1
                         else return -1
                     }
                     ))
-                    if (a.z < b.z) return 1
+                    if (a.z > b.z) return 1
                     else return -1
                 })
             }
-            else if (dim === 'z')
+            else if (dim === 'z') {
                 newColumns[i].sort((a, b) => {
-                    if (a.x > b.x) return 1
+                    if (a.y > b.y) return 1
                     else return -1
                 })
+            }
+
             else newColumns[i].sort((a, b) => {
                 if (a.x > b.x) return 1
                 else return -1
             })
         }
 
-    }
+    }*/
     return newColumns
 }
-
+//step manager
 export const steps = (columns, vector, radius) => {
     switch (vector) {
-        case 'up': return sumUp(columns,1)
-        case 'down': return sumDown(columns,0)
-        case 'dimZUp': return moveRightUp(columns, radius)
-        case 'dimZDown': return moveLeftDown(columns, radius)
-        case 'dimYUp': return moveLeftUp(columns,radius)
-        case 'dimYDown': return moveRightDown(columns,radius)
+        case 'upX': return sumUp(columns, 1)
+        case 'downX': return sumDown(columns, 0)
+        case 'upY': return sumRightUp(columns, radius)
+        case 'downY': return sumLeftDown(columns, radius)
+        case 'upZ': return sumLeftUp(columns, radius)
+        case 'downZ': return sumRightDown(columns, radius)
     }
 }
