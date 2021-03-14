@@ -5,6 +5,7 @@ import {Container} from "./Container";
 import {steps} from "../app/move";
 import "../App.css";
 import {gameover} from "../app/game_over";
+import {isMoveXDown, isMoveXUp} from "../app/haveMove";
 
 export default function Grid(props) {
   useEffect(() => {
@@ -27,13 +28,17 @@ export default function Grid(props) {
     let newMap = props.map;
     switch (e.key.toLowerCase()) {
       case "w": {
-        newMap = steps(newMap, "upX");
-        move(newMap, props.radius); //if have move do move and retrive new hex
+        if (isMoveXUp(newMap)) {
+          newMap = steps(newMap, "upX");
+          move(newMap, props.radius);
+        } //if have move do move and retrive new hex
         break;
       }
       case "s": {
-        newMap = steps(newMap, "downX");
-        move(newMap, props.radius);
+        if (isMoveXDown(newMap)) {
+          newMap = steps(newMap, "downX");
+          move(newMap, props.radius);
+        }
         break;
       }
       case "e": {
