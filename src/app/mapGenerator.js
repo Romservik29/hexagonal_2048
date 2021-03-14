@@ -15,7 +15,7 @@ export function generateMap(radius) {
         let r1 = Math.max(-map_radius, -q - map_radius);
         let r2 = Math.min(map_radius, -q + map_radius);
         for (let r = r1; r <= r2; r++) {
-            column.push(new Hex(q, r, -q - r));
+            column.push(new Hex(q, -q - r,r));
         }
         map.push(column)
     }
