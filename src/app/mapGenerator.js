@@ -1,9 +1,9 @@
-class Hex {
-    constructor(x, y, z) {
+export class Hex {
+    constructor(x, y, z, value) {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.value = 0;
+        this.value = value;
     }
 }
 
@@ -15,7 +15,7 @@ export function generateMap(radius) {
         let r1 = Math.max(-map_radius, -q - map_radius);
         let r2 = Math.min(map_radius, -q + map_radius);
         for (let r = r1; r <= r2; r++) {
-            column.push(new Hex(q, -q - r,r));
+            column.push(new Hex(q, (-q + (- r))===-0? 0 :(-q + (- r)) , r, 0));//не знаю как -0 убрат)
         }
         map.push(column)
     }
@@ -28,23 +28,17 @@ export function notEmptyCeels(map) {
     currentMap.filter(column => column.map(item => item.value !== 0 ? ceels.push(item) : false))
     return ceels
 }
+export function emptyCeels(map) {
+    let currentMap = map
+    return currentMap.some(column => column.some(item => item.value === 0))
+}
 
 export function addCeelsOnMap(map, cells) {
     cells.forEach(cell => {
-        return map.map(column => column.map(item => {
+        map.map(column => column.map(item => {
             if (item.x === cell.x && item.y === cell.y)
                 return item.value = cell.value
         }))
     })
     return map
 }
-
-// export function columnsToMap(columns) {
-//     let map = [];
-//     for (let i = 0; i < columns.length; i++) {
-//         for (let j = 0; j < columns[i].length; j++) {
-//             map.push(columns[i][j])
-//         }
-//     }
-//     return map;
-// }

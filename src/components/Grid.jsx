@@ -1,9 +1,10 @@
 import {addCeelsOnMap, notEmptyCeels} from "../app/mapGenerator";
-import {Hex} from "./Hex";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Container} from "./Container";
 import {steps} from "../app/move";
+import "../App.css";
+import {gameover} from "../app/game_over";
 
 export default function Grid(props) {
   useEffect(() => {
@@ -12,69 +13,47 @@ export default function Grid(props) {
       document.removeEventListener("keypress", onKeypress);
     };
   }, [props.map]);
+  const move = (newMap, radius) => {
+    return axios
+      .post(`http://localhost:13337/${radius}`, notEmptyCeels(newMap))
+      .then((res) => {
+        newMap = [...addCeelsOnMap(newMap, res.data)];
+        props.setIsGameOver(gameover(newMap));
+        props.setMap(newMap);
+      });
+  };
 
   const onKeypress = (e) => {
     let newMap = props.map;
     switch (e.key.toLowerCase()) {
       case "w": {
-        console.log("w");
         newMap = steps(newMap, "upX");
-        axios
-          .post(`http://localhost:13337/${props.radius}`, notEmptyCeels(newMap))
-          .then((res) => {
-            props.setMap([...addCeelsOnMap(newMap, res.data)]);
-          });
-
+        move(newMap, props.radius); //if have move do move and retrive new hex
         break;
       }
       case "s": {
-        console.log("s");
         newMap = steps(newMap, "downX");
-        axios
-          .post(`http://localhost:13337/${props.radius}`, notEmptyCeels(newMap))
-          .then((res) => {
-            props.setMap([...addCeelsOnMap(newMap, res.data)]);
-          });
+        move(newMap, props.radius);
         break;
       }
       case "e": {
-        console.log("e");
         newMap = steps(newMap, "upY", props.radius);
-        axios
-          .post(`http://localhost:13337/${props.radius}`, notEmptyCeels(newMap))
-          .then((res) => {
-            props.setMap([...addCeelsOnMap(newMap, res.data)]);
-          });
+        move(newMap, props.radius);
         break;
       }
       case "q": {
-        console.log("q");
         newMap = steps(newMap, "upZ", props.radius);
-        axios
-          .post(`http://localhost:13337/${props.radius}`, notEmptyCeels(newMap))
-          .then((res) => {
-            props.setMap([...addCeelsOnMap(newMap, res.data)]);
-          });
+        move(newMap, props.radius);
         break;
       }
       case "d": {
-        console.log("q");
         newMap = steps(newMap, "downZ", props.radius);
-        axios
-          .post(`http://localhost:13337/${props.radius}`, notEmptyCeels(newMap))
-          .then((res) => {
-            props.setMap([...addCeelsOnMap(newMap, res.data)]);
-          });
+        move(newMap, props.radius);
         break;
       }
       case "a": {
-        console.log("e");
         newMap = steps(newMap, "downY", props.radius);
-        axios
-          .post(`http://localhost:13337/${props.radius}`, notEmptyCeels(newMap))
-          .then((res) => {
-            props.setMap([...addCeelsOnMap(newMap, res.data)]);
-          });
+        move(newMap, props.radius);
         break;
       }
       default:
@@ -84,26 +63,20 @@ export default function Grid(props) {
 
   return (
     <div>
-      {console.log(props.map)}
-
       <Container>
         {props.map.map((arr) => (
           <div>
             {arr.map((arr) => (
-              <Hex
+              <div
+                className="hex"
                 data-value={arr.value}
                 data-x={arr.x}
                 data-y={arr.y}
                 data-z={arr.z}
                 key={Math.random(123)}
               >
-                <div>
-                  {arr.x + ","}
-                  {arr.y + ","}
-                  {arr.z + ", "}
-                  <div>{arr.value}</div>
-                </div>
-              </Hex>
+                <div>{arr.value !== 0 ? arr.value : null}</div>
+              </div>
             ))}
           </div>
         ))}
