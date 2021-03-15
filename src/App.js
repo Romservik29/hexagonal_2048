@@ -36,7 +36,7 @@ export default function App() {
             <div className="controls">
                 <div>
                     <select value={url} onChange={handleChange}>
-                        <option value='//68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/'>http://68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/</option>
+                        <option value='//68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/'>//68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/</option>
                         <option value='http://localhost:13337/'>http://localhost:13337/</option>
                     </select>
                 </div>
