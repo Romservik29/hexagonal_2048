@@ -10,7 +10,7 @@ export default function App() {
     const [map, setMap] = useState(0)
     const [isGameOver, setIsGameOver] = useState(false);
     const [activeBtn, setActiveBtn] = useState(0)
-    const [url, setUrl] = useState('http://68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/')
+    const [url, setUrl] = useState('https://68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/')
     let location = useLocation();
     useEffect(() => {
         if (+location.hash.slice(-1) > 0) radiusClick(+location.hash.slice(-1))
@@ -36,8 +36,8 @@ export default function App() {
             <div className="controls">
                 <div>
                     <select value={url} onChange={handleChange}>
-                        <option value='http://68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/'>http://68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/</option>
-                        <option value='http://localhost:13337/'>http://localhost:13337/</option>
+                        <option value='https://68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/'>http://68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/</option>
+                        <option value='https://localhost:13337/'>http://localhost:13337/</option>
                     </select>
                 </div>
                 <button className={activeBtn === 2 ? "active" : null} onClick={() => radiusClick(2)}>2</button>
