@@ -35,9 +35,9 @@ export default function App() {
         <div>
             <div className="controls">
                 <div>
-                    <select value={url} onChange={handleChange}>
+                    <select id="url-server" value={url} onChange={handleChange}>
                         <option value='//68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/'>//68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/</option>
-                        <option value='http://localhost:13337/'>http://localhost:13337/</option>
+                        <option id="localhost" value='http://localhost:13337/'>http://localhost:13337/</option>
                     </select>
                 </div>
                 <button className={activeBtn === 2 ? "active" : null} onClick={() => radiusClick(2)}>2</button>
