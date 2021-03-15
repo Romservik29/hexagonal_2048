@@ -5,7 +5,7 @@ import {Container} from "./Container";
 import {steps} from "../app/move";
 import "../App.css";
 import {gameover} from "../app/game_over";
-import {isMove, isMoveX, isMoveY, isMoveZ} from "../app/haveMove";
+import {isMove, isMoveX} from "../app/isMove";
 
 export default function Grid(props) {
   useEffect(() => {

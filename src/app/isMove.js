@@ -12,30 +12,6 @@ export function isMoveX(columns, v = 'up') {
     return status
 }
 
-export function isMoveY(columns, v = 'up') {
-    let status = false
-    let map = [...columns]
-    columns.some(column => column.some(hex => map.some(mapColumn => mapColumn.some(cell => {
-        if (cell.y === hex.y) {
-            if (v === 'up' ? hex.x < cell.x : hex.x > cell.x)
-                if (hex.value !== 0 ? hex.value === cell.value || cell.value === 0 : false) status = true
-        }
-    }))))
-    return status
-}
-
-export function isMoveZ(columns, v = 'up') {
-    let status = false
-    let map = [...columns]
-    columns.some(column => column.some(hex => map.some(mapColumn => mapColumn.some(cell => {
-        if (cell.z === hex.z) {
-            if (v === 'up' ? hex.x < cell.x : hex.x > cell.x)
-                if (hex.value !== 0 ? hex.value === cell.value || cell.value === 0 : false) status = true
-        }
-    }))))
-    return status
-}
-
 export function isMove(columns, vector, vertical = 'up') {
     let status = false
     let map = [...columns]
