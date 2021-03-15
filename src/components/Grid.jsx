@@ -14,9 +14,9 @@ export default function Grid(props) {
       document.removeEventListener("keypress", onKeypress);
     };
   }, [props.map]);
-  const move = (newMap, radius) => {
+  const move = (newMap) => {
     return axios
-      .post(`${props.url}${radius}`, notEmptyCeels(newMap))
+      .post(`${props.url}${props.radius}`, notEmptyCeels(newMap))
       .then((res) => {
         newMap = [...addCeelsOnMap(newMap, res.data)];
         props.setIsGameOver(gameover(newMap));
@@ -25,48 +25,48 @@ export default function Grid(props) {
   };
 
   const onKeypress = (e) => {
-    console.log(e.code)
     let newMap = props.map;
+    props.setIsGameOver(gameover(newMap));
     switch (e.code) {
       case "KeyW": {
         if (isMoveX(newMap)) {
           newMap = steps(newMap, "upX");
-          move(newMap, props.radius);
+          move(newMap);
         } //if have move do move and retrive new hex
         break;
       }
       case "KeyS": {
         if (isMoveX(newMap, "down")) {
           newMap = steps(newMap, "downX");
-          move(newMap, props.radius);
+          move(newMap);
         }
         break;
       }
       case "KeyE": {
         if (isMove(newMap, "y")) {
           newMap = steps(newMap, "upY", props.radius);
-          move(newMap, props.radius);
+          move(newMap);
         }
         break;
       }
       case "KeyQ": {
-        if (isMove(newMap, "z",'down')) {
+        if (isMove(newMap, "z", "down")) {
           newMap = steps(newMap, "upZ", props.radius);
-          move(newMap, props.radius);
+          move(newMap);
         }
         break;
       }
       case "KeyD": {
         if (isMove(newMap, "z")) {
           newMap = steps(newMap, "downZ", props.radius);
-          move(newMap, props.radius);
+          move(newMap);
         }
         break;
       }
       case "KeyA": {
-        if (isMove(newMap,'y', "down")) {
+        if (isMove(newMap, "y", "down")) {
           newMap = steps(newMap, "downY", props.radius);
-          move(newMap, props.radius);
+          move(newMap);
         }
         break;
       }

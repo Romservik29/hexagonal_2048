@@ -10,7 +10,7 @@ export default function App() {
     const [map, setMap] = useState(0)
     const [isGameOver, setIsGameOver] = useState(false);
     const [activeBtn, setActiveBtn] = useState(0)
-    const [url, setUrl] = useState('//68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud/')
+    const [url, setUrl] = useState('http://localhost:13337/')
     let location = useLocation();
     useEffect(() => {
         if (+location.hash.slice(-1) > 0) radiusClick(+location.hash.slice(-1))
@@ -20,7 +20,6 @@ export default function App() {
         setIsGameOver(false)
         setActiveBtn(e)
         let newMap = generateMap(e)
-        console.log(newMap)
         setMap(newMap)
         axios
             .post(`${url}${e}`, notEmptyCeels(newMap))
