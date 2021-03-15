@@ -5,7 +5,7 @@ import {Container} from "./Container";
 import {steps} from "../app/move";
 import "../App.css";
 import {gameover} from "../app/game_over";
-import {isMoveX} from "../app/haveMove";
+import {isMove, isMoveX, isMoveY, isMoveZ} from "../app/haveMove";
 
 export default function Grid(props) {
   useEffect(() => {
@@ -35,30 +35,38 @@ export default function Grid(props) {
         break;
       }
       case "s": {
-        if (isMoveX(newMap,'down')) {
+        if (isMoveX(newMap, "down")) {
           newMap = steps(newMap, "downX");
           move(newMap, props.radius);
         }
         break;
       }
       case "e": {
-        newMap = steps(newMap, "upY", props.radius);
-        move(newMap, props.radius);
+        if (isMove(newMap, "y")) {
+          newMap = steps(newMap, "upY", props.radius);
+          move(newMap, props.radius);
+        }
         break;
       }
       case "q": {
-        newMap = steps(newMap, "upZ", props.radius);
-        move(newMap, props.radius);
+        if (isMove(newMap, "z",'down')) {
+          newMap = steps(newMap, "upZ", props.radius);
+          move(newMap, props.radius);
+        }
         break;
       }
       case "d": {
-        newMap = steps(newMap, "downZ", props.radius);
-        move(newMap, props.radius);
+        if (isMove(newMap, "z")) {
+          newMap = steps(newMap, "downZ", props.radius);
+          move(newMap, props.radius);
+        }
         break;
       }
       case "a": {
-        newMap = steps(newMap, "downY", props.radius);
-        move(newMap, props.radius);
+        if (isMove(newMap,'y', "down")) {
+          newMap = steps(newMap, "downY", props.radius);
+          move(newMap, props.radius);
+        }
         break;
       }
       default:
