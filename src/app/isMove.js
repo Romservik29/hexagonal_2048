@@ -1,5 +1,3 @@
-import { Hex } from "./mapGenerator"//dont work
-
 export function isMoveX(columns, v = 'up') {
     let status = false
     let map = [...columns]

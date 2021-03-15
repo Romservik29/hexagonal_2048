@@ -16,7 +16,7 @@ export default function Grid(props) {
   }, [props.map]);
   const move = (newMap, radius) => {
     return axios
-      .post(`http://localhost:13337/${radius}`, notEmptyCeels(newMap))
+      .post(`${props.url}${radius}`, notEmptyCeels(newMap))
       .then((res) => {
         newMap = [...addCeelsOnMap(newMap, res.data)];
         props.setIsGameOver(gameover(newMap));
