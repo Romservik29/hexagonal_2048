@@ -25,44 +25,45 @@ export default function Grid(props) {
   };
 
   const onKeypress = (e) => {
+    console.log(e.code)
     let newMap = props.map;
-    switch (e.key.toLowerCase()) {
-      case "w": {
+    switch (e.code) {
+      case "KeyW": {
         if (isMoveX(newMap)) {
           newMap = steps(newMap, "upX");
           move(newMap, props.radius);
         } //if have move do move and retrive new hex
         break;
       }
-      case "s": {
+      case "KeyS": {
         if (isMoveX(newMap, "down")) {
           newMap = steps(newMap, "downX");
           move(newMap, props.radius);
         }
         break;
       }
-      case "e": {
+      case "KeyE": {
         if (isMove(newMap, "y")) {
           newMap = steps(newMap, "upY", props.radius);
           move(newMap, props.radius);
         }
         break;
       }
-      case "q": {
+      case "KeyQ": {
         if (isMove(newMap, "z",'down')) {
           newMap = steps(newMap, "upZ", props.radius);
           move(newMap, props.radius);
         }
         break;
       }
-      case "d": {
+      case "KeyD": {
         if (isMove(newMap, "z")) {
           newMap = steps(newMap, "downZ", props.radius);
           move(newMap, props.radius);
         }
         break;
       }
-      case "a": {
+      case "KeyA": {
         if (isMove(newMap,'y', "down")) {
           newMap = steps(newMap, "downY", props.radius);
           move(newMap, props.radius);
