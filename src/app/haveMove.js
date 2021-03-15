@@ -1,23 +1,37 @@
 import { Hex } from "./mapGenerator"//dont work
 
 export function isMoveXUp(columns) {
-    for (let i = 0; i < columns.length; i++) {
-        for (let j = 0; j < columns[i].length - 1; j++) {
-            if (columns[i][j].value === columns[i][j + 1].value && columns[i][j].value !== 0) return true
-            if (columns[i][j].value !== 0 && columns[i][j].value + columns[i][j + 1] !== 0) return true
+    let status = false
+    let map = [...columns]
+    columns.some(column => column.some(hex => map.some(mapColumn => mapColumn.some(cell => {
+        if (hex.x <= 0 ? cell.x === hex.x : false) {
+            if (hex.y < cell.y)
+                if (hex.value !== 0 ? hex.value === cell.value || cell.value === 0 : false) status = true
         }
-    }
-    if (columns[1][1].value === 0 && columns[1][2].value !== 0) return true
-    return false
+        else if (hex.x > 0 ? cell.x === hex.x : false) {
+            if (hex.y > cell.y) {
+                if (hex.value !== 0 ? hex.value === cell.value || cell.value !== 0 : false) status = true
+            }
+        }
+
+    }))))
+    return status
 }
 
 export function isMoveXDown(columns) {
-    for (let i = 0; i < columns.length; i++) {
-        for (let j = 1; j < columns[i].length; j++) {
-            if (columns[i][j].value === columns[i][j - 1].value && columns[i][j].value !== 0) return true
-            if (columns[i][j].value === 0 && columns[i][j - 1] !== 0) return true
+    let status = false
+    let map = [...columns]
+    columns.some(column => column.some(hex => map.some(mapColumn => mapColumn.some(cell => {
+        if (hex.x <= 0 ? cell.x === hex.x : false) {
+            if (hex.y < cell.y)
+                if (hex.value !== 0 ? hex.value === cell.value || cell.value === 0 : false) status = true
         }
-    }
-    if (columns[1][1].value === 0 && columns[1][0].value !== 0) return true
-    return false
+        else if (hex.x > 0 ? cell.x === hex.x : false) {
+            if (hex.y > cell.y) {
+                if (hex.value !== 0 ? hex.value === cell.value || cell.value !== 0 : false) status = true
+            }
+        }
+
+    }))))
+    return status
 }

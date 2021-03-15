@@ -1,21 +1,6 @@
 import { Hex, emptyCeels } from './mapGenerator'
-const grid = [
-    [
-        { x: -1, y: 1, z: 0, value: 2 },
-        { x: -1, y: 0, z: 1, value: 4 }
-    ],
-    [
-        { x: 0, y: 1, z: -1, value: 6 },
-        { x: 0, y: -0, z: 0, value: 8 },
-        { x: 0, y: -1, z: 1, value: 10 }
-    ],
-    [
-        { x: 1, y: 0, z: -1, value: 12 },
-        { x: 1, y: -1, z: 0, value: 14 }
-    ]
-]
+
 export function gameover(grid) {
-    debugger
     let status = false
     let cube_directions = [
         new Hex(+1, -1, 0), new Hex(+1, 0, -1), new Hex(0, +1, -1),
