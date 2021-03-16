@@ -28,7 +28,7 @@ export function sumDown(columns, switcher) {
     }
     return columns
 }
-// move and sum cells in up the axis Y|Z
+// move and sum cells in up the axis Y|Z    TODO: BUG on Center Line search correctly alghorithn 
 export function sumRUp(columns, switcher) {
     for (let i = Math.ceil(columns.length / 2); i < columns.length; i++) {
         move(columns, switcher)
