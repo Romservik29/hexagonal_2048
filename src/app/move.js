@@ -1,4 +1,5 @@
 export default function move(map, radius, vector, up = true) {
+    debugger
     for (let i = -radius + 1; i < radius; i++) {
         let column = map.filter(hex => hex[vector] === i)
         column = !up ? column.reverse() : column;
