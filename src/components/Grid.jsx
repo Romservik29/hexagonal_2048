@@ -8,27 +8,26 @@ import Hex from "./Hex";
 import {moveControler} from "../app/moveControl";
 
 export default function Grid(props) {
-  const [hexSize, setHexSize] = useState(100);
+  const [hexSize] = useState(100);
 
   useEffect(() => {
+    const onKeypress = (e) => {
+      props.setIsGameOver(gameover(props.map));
+      let newMap = moveControler(props.map, props.radius, e.code);
+      if (newMap !== false)
+        axios
+          .post(`${props.url}${props.radius}`, notEmptyCeels(newMap))
+          .then((res) => {
+            newMap = [...addCeelsOnMap(newMap, res.data)];
+            props.setIsGameOver(gameover(newMap));
+            props.setMap(newMap);
+          });
+    };
     document.addEventListener("keypress", onKeypress);
     return () => {
       document.removeEventListener("keypress", onKeypress);
     };
-  }, [props.map]);
-
-  const onKeypress = (e) => {
-    props.setIsGameOver(gameover(props.map));
-    let newMap = moveControler(props.map, props.radius, e.code);
-    if (newMap !== false)
-      axios
-        .post(`${props.url}${props.radius}`, notEmptyCeels(newMap))
-        .then((res) => {
-          newMap = [...addCeelsOnMap(newMap, res.data)];
-          props.setIsGameOver(gameover(newMap));
-          props.setMap(newMap);
-        });
-  };
+  });
 
   return (
     <div>

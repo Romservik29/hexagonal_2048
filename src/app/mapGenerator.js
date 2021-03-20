@@ -11,7 +11,6 @@ export function generateMap(radius) {
     let map = []
     let map_radius = radius - 1
     for (let q = -map_radius; q <= map_radius; q++) {
-        let column = []
         let r1 = Math.max(-map_radius, -q - map_radius);
         let r2 = Math.min(map_radius, -q + map_radius);
         for (let r = r1; r <= r2; r++) {

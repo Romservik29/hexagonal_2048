@@ -1,7 +1,6 @@
 import { Hex, emptyCeels } from './mapGenerator'
 
 export function gameover(grid) {
-    let status = false
     let cube_directions = [
         new Hex(+1, -1, 0), new Hex(+1, 0, -1), new Hex(0, +1, -1),
         new Hex(-1, +1, 0), new Hex(-1, 0, +1), new Hex(0, -1, +1),
@@ -21,8 +20,8 @@ export function gameover(grid) {
             })
             if (neighbors.some(hex => {
                 return grid.some(item => (hex.x === item.x && hex.y === item.y && hex.value === item.value))
-            })) return status = false
+            })) return false
         }
     } else return true
-    return status = true
+    return true
 }
