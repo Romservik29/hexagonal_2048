@@ -8,24 +8,20 @@ export function gameover(grid) {
     ]
     if (emptyCeels(grid) === true) return false
     else if (emptyCeels(grid) === false) {
+        debugger
         for (let i = 0; i < grid.length; i++) {
-            for (let j = 0; j < grid[i].length; j++) {
-                let neighbors = []
-                cube_directions.forEach(hex => {
-                    neighbors.push({
-                        x: grid[i][j].x + hex.x,
-                        y: grid[i][j].y + hex.y,
-                        z: grid[i][j].z + hex.z,
-                        value: grid[i][j].value
-                    })
+            let neighbors = []
+            cube_directions.forEach(hex => {
+                neighbors.push({
+                    x: grid[i].x + hex.x,
+                    y: grid[i].y + hex.y,
+                    z: grid[i].z + hex.z,
+                    value: grid[i].value
                 })
-                if (neighbors.some(hex => {
-                    return grid.some(column => {
-                        return column.some(item => (hex.x === item.x && hex.y === item.y && hex.value === item.value))
-                    });
-
-                })) return status = false
-            }
+            })
+            if (neighbors.some(hex => {
+                return grid.some(item => (hex.x === item.x && hex.y === item.y && hex.value === item.value))
+            })) return status = false
         }
     } else return true
     return status = true

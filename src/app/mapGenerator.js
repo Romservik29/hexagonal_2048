@@ -15,30 +15,22 @@ export function generateMap(radius) {
         let r1 = Math.max(-map_radius, -q - map_radius);
         let r2 = Math.min(map_radius, -q + map_radius);
         for (let r = r1; r <= r2; r++) {
-            column.push(new Hex(q, (-q + (- r))===-0? 0 :(-q + (- r)) , r, 0));//не знаю как -0 убрат)
+            map.push(new Hex(q, (-q + (- r)) === -0 ? 0 : (-q + (- r)), r, 0));//не знаю как -0 убрат)
         }
-        map.push(column)
     }
     return map
 }
 
 export function notEmptyCeels(map) {
-    let ceels = []
-    let currentMap = map
-    currentMap.filter(column => column.map(item => item.value !== 0 ? ceels.push(item) : false))
-    return ceels
+    return map.filter(hex => hex.value !== 0)
 }
+
 export function emptyCeels(map) {
-    let currentMap = map
-    return currentMap.some(column => column.some(item => item.value === 0))
+    return map.some(hex => hex.value === 0)
 }
 
 export function addCeelsOnMap(map, cells) {
-    cells.forEach(cell => {
-        map.map(column => column.map(item => {
-            if (item.x === cell.x && item.y === cell.y)
-                return item.value = cell.value
-        }))
-    })
+    cells.forEach(cell =>
+        map.filter(hex => hex.x === cell.x ? hex.y === cell.y : false)[0].value = cell.value)
     return map
 }

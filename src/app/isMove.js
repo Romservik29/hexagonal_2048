@@ -1,23 +1,13 @@
-export function isMoveX(columns, v = 'up') {
-    let status = false
-    let map = [...columns]
-    columns.some(column => column.some(hex => map.some(mapColumn => mapColumn.some(cell => {
-        if (cell.x === hex.x) {
-            if (v === 'up' ? hex.y < cell.y : hex.y > cell.y)
-                if (hex.value !== 0 ? hex.value === cell.value || cell.value === 0 : false) status = true
-        }
-    }))))
-    return status
-}
+export default function isMove(map, radius, vector, up = true) {
+    for (let i = -radius + 1; i < radius; i++) {
+        let column = map.filter(hex => hex[vector] === i)
+        column = !up ? column.reverse() : column;
+        for (let j = 0; j < column.length - 1; j++) {
+            if (column[j].value === 0 ? column[j + 1].value !== 0 : column[j].value === column[j + 1].value) {
+                return true
+            }
 
-export function isMove(columns, vector, vertical = 'up') {
-    let status = false
-    let map = [...columns]
-    columns.some(column => column.some(hex => map.some(mapColumn => mapColumn.some(cell => {
-        if (cell[vector] === hex[vector]) {
-            if (vertical === 'up' ? hex.x < cell.x : hex.x > cell.x)
-                if (hex.value !== 0 ? hex.value === cell.value || cell.value === 0 : false) status = true
         }
-    }))))
-    return status
+    }
+    return false
 }

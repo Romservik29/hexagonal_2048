@@ -1,4 +1,4 @@
-import move from "./move"
+import move from "../move"
 
 test('moveXUp', () => {
     const map = [
