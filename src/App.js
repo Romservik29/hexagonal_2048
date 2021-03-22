@@ -11,10 +11,10 @@ export default function App() {
     const [isGameOver, setIsGameOver] = useState(false);
     const [activeBtn, setActiveBtn] = useState(0)
     const [url, setUrl] = useState('http://localhost:13337/')
-    let location = useLocation();
+    const [location, setLocation] = useState(window.location);
     useEffect(() => {
-        if (+location.hash.slice(-1) > 0) radiusClick(+location.hash.slice(-1))
-    },[])
+        radiusClick(+location.hash.slice(-1))
+    }, [])
     const radiusClick = (e) => {
         setRadius(e)
         setIsGameOver(false)
