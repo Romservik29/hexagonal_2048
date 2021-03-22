@@ -14,7 +14,7 @@ export default function App() {
     let location = useLocation();
     useEffect(() => {
         if (+location.hash.slice(-1) > 0) radiusClick(+location.hash.slice(-1))
-    })
+    },[])
     const radiusClick = (e) => {
         setRadius(e)
         setIsGameOver(false)
