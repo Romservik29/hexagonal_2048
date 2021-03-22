@@ -1,15 +1,19 @@
 import move from './move'
 import sum from './sum'
 import isMove from './isMove'
-
-export const moveControler = (map, radius, key) => {
+function moveSumMove(map, radius, vector, up = true) {
+    return isMove(map, radius, vector,up)
+        ? move(sum(move(map, radius, vector, up), radius, vector, up), radius, vector, up)
+        : false
+}
+export const moveControler = (map, radius = 2, key) => {
     switch (key) {
-        case 'KeyW': return isMove(map, radius, 'x') ? move(sum(move(map, radius, 'x'), radius, 'x'), radius, 'x') : false
-        case 'KeyS': return isMove(map, radius, 'x', false) ? move(sum(move(map, radius, 'x', false), radius, 'x', false), radius, 'x', false) : false
-        case 'KeyE': return isMove(map,radius, "y",false) ? move(sum(move(map, radius, 'y', false), radius, 'y', false), radius, 'y', false) : false
-        case 'KeyA': return isMove(map,radius, "y") ? move(sum(move(map, radius, 'y'), radius, 'y'), radius, 'y') : false
-        case 'KeyQ': return isMove(map,radius, "z") ? move(sum(move(map, radius, 'z'), radius, 'z'), radius, 'z') : false
-        case 'KeyD': return isMove(map,radius, "z",false) ? move(sum(move(map, radius, 'z', false), radius, 'z', false), radius, 'z', false) : false
+        case 'KeyW': return moveSumMove(map, radius, 'x')
+        case 'KeyS': return moveSumMove(map, radius, 'x', false) 
+        case 'KeyE': return moveSumMove(map, radius, "y", false)
+        case 'KeyA': return moveSumMove(map, radius, "y")
+        case 'KeyQ': return moveSumMove(map, radius, "z") 
+        case 'KeyD': return moveSumMove(map, radius, "z", false)
         default: return false
     }
 }
