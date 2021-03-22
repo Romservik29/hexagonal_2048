@@ -6,6 +6,7 @@ import "../App.css";
 import {gameover} from "../app/game_over";
 import Hex from "./Hex";
 import {moveControler} from "../app/moveControl";
+import CellsField from "./CellsField";
 
 export default function Grid(props) {
   const [hexSize] = useState(100);
@@ -32,6 +33,7 @@ export default function Grid(props) {
   return (
     <div>
       <Container>
+        <CellsField />
         <div style={{position: "absolute", width: 500}}>
           {props.map.map((hex) => (
             <Hex

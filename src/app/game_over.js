@@ -7,7 +7,6 @@ export function gameover(grid) {
     ]
     if (emptyCeels(grid) === true) return false
     else if (emptyCeels(grid) === false) {
-        debugger
         for (let i = 0; i < grid.length; i++) {
             let neighbors = []
             cube_directions.forEach(hex => {
