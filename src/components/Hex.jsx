@@ -13,7 +13,6 @@ export default function Hex(props) {
       data-y={props.y}
       data-z={props.z}
     >
-      <div>{props.value !== 0 ? props.value : null}</div>
     </div>
   );
 }

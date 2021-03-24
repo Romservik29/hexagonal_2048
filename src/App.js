@@ -1,37 +1,26 @@
 import './App.css'
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
-import { addCeelsOnMap, generateMap, notEmptyCeels } from './app/mapGenerator'
 import Grid from './components/Grid'
+import styled from 'styled-components';
 
 export default function App() {
     const [radius, setRadius] = useState(0)
-    const [map, setMap] = useState(0)
     const [isGameOver, setIsGameOver] = useState(false);
     const [activeBtn, setActiveBtn] = useState(0)
     const [url, setUrl] = useState('http://localhost:13337/')
-    const [location, setLocation] = useState(window.location);
+    const [location] = useState(window.location);
     useEffect(() => {
         radiusClick(+location.hash.slice(-1))
     }, [])
     const radiusClick = (e) => {
         setRadius(e)
-        setIsGameOver(false)
         setActiveBtn(e)
-        let newMap = generateMap(e)
-        setMap(newMap)
-        axios
-            .post(`${url}${e}`, notEmptyCeels(newMap))
-            .then(res => {
-                setMap([...addCeelsOnMap(newMap, res.data)])
-            })
     }
     const handleChange = (e) => {
         setUrl(e.target.value)
     }
     return (
-        <div>
+        <Container>
             <div className="controls">
                 <div>
                     <select id="url-server" value={url} onChange={handleChange}>
@@ -55,7 +44,17 @@ export default function App() {
                     )}
             </div>
 
-            {radius !== 0 ? <Grid radius={radius} map={map} url={url} setMap={setMap} setIsGameOver={setIsGameOver} /> : false}
-        </div>
+            {radius !== 0 ? <Grid radius={radius} url={url}  setIsGameOver={setIsGameOver} /> : null}
+        </Container>
     )
 }
+
+const Container = styled.div`
+display: grid;
+    margin: auto;
+    max-width: 500px;
+    grid-template-areas:
+        "menu"
+        "game"
+        "status";
+`
