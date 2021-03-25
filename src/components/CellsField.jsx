@@ -7,8 +7,8 @@ export default function CellsField({map,hexSize}) {
 
   return (
     <div>
-      {cells.map((cell) => (
-        <Cell key={cell + "12"} hexSize={hexSize} value={cell.value} x={cell.x} z={cell.z} />
+      {cells.map((cell,index) => (
+        <Cell key={index} hexSize={hexSize} value={cell.value} x={cell.x} z={cell.z} />
       ))}
     </div>
   );

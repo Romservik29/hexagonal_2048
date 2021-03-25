@@ -11,14 +11,16 @@ export default function App() {
     const [location] = useState(window.location);
     useEffect(() => {
         radiusClick(+location.hash.slice(-1))
-    }, [])
+    }, [location.hash])
     const radiusClick = (e) => {
         setRadius(e)
+        setIsGameOver(false)
         setActiveBtn(e)
     }
     const handleChange = (e) => {
         setUrl(e.target.value)
     }
+    const buttons = [2, 3, 4]
     return (
         <Container>
             <div className="controls">
@@ -28,23 +30,15 @@ export default function App() {
                         <option id="localhost" value='http://localhost:13337/'>{'http://localhost:13337/'}</option>
                     </select>
                 </div>
-                <button className={activeBtn === 2 ? "active" : null} onClick={() => radiusClick(2)}>2</button>
-                <button className={activeBtn === 3 ? "active" : null} onClick={() => radiusClick(3)}>3</button>
-                <button className={activeBtn === 4 ? "active" : null} onClick={() => radiusClick(4)}>4</button>
-                {isGameOver
-                    ? (
-                        <div>
-                            Game Status: <span data-status="game-over">Game Over</span>
-                        </div>
-                    )
-                    : (
-                        <div>
-                            Game Status: <span data-status="playing">playing</span>
-                        </div>
-                    )}
+                {buttons.map((num) => <button className={activeBtn === num ? "active" : null} onClick={() => radiusClick(num)}>{num}</button>)}
+                <div>
+                    Game Status:{isGameOver
+                        ? <span data-status="game-over">Game Over</span>
+                        : <span data-status="playing">playing</span>}
+                </div>
             </div>
 
-            {radius !== 0 ? <Grid radius={radius} url={url}  setIsGameOver={setIsGameOver} /> : null}
+            {radius !== 0 ? <Grid radius={radius} url={url} setIsGameOver={setIsGameOver} /> : null}
         </Container>
     )
 }

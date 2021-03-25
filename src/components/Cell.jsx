@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import {color} from "./color";
+import {color} from "../app/color";
 
-export default function Cell({key, x, z, hexSize, value}) {
-  const Hex = styled.div`
-    position: absolute;
-    left: ${hexSize * ((3 / 2) * x) + 200}px;
-    top: ${hexSize * ((Math.sqrt(3) / 2) * x + Math.sqrt(3) * z) + 200}px;
-    transition: left 2s, top 2s;
-  `;
+export default function Cell({x, z, hexSize, value}) {
+
   return (
-    <Hex key={key}>
-      <HexValue>{value}</HexValue>
+    <Hex
+      style={{
+        left: hexSize * ((3 / 2) * x) + 200,
+        top: hexSize * ((Math.sqrt(3) / 2) * x + Math.sqrt(3) * z) + 200,
+      }}
+    >
       <svg
         id="0.4888067125480031"
         height="173.20508075688772"
@@ -25,14 +24,23 @@ export default function Cell({key, x, z, hexSize, value}) {
           fill={color[value]}
         ></path>
       </svg>
+      <HexValue>{value}</HexValue>
     </Hex>
   );
 }
 
-const HexValue = styled.div`
+const Hex = styled.div`
+  width: 200px;
+  height: 173px;
   position: absolute;
-  font-weight: 1000;
-  font-size: 20pt;
-  top: 40%;
-  left: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //transition: left 150ms ease-out 0ms, top 150ms ease-out 0ms;
+`;
+
+const HexValue = styled.span`
+  position: absolute;
+  color: rgb(118, 110, 102);
+  font-size: 20px;
 `;

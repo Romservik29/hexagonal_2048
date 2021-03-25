@@ -11,16 +11,16 @@ export default function Grid(props) {
   const [map, setMap] = useState(generateMap(props.radius));
   const [hexSize] = useState(100);
   useEffect(() => {
-    props.setIsGameOver(false);
     let newMap = generateMap(props.radius);
     axios
       .post(`${props.url}${props.radius}`, notEmptyCeels(newMap))
       .then((res) => {
         setMap([...addCeelsOnMap(newMap, res.data)]);
       });
-  }, [props.radius]);
+  }, [props.radius,props.url]);
+
   useEffect(() => {
-    const onKeypress = (e) => {
+    function onKeypress(e) {
       props.setIsGameOver(gameover(map));
       let newMap = moveControler(map, props.radius, e.code);
       if (newMap !== false)
@@ -31,7 +31,7 @@ export default function Grid(props) {
             props.setIsGameOver(gameover(newMap));
             setMap(newMap);
           });
-    };
+    }
     document.addEventListener("keypress", onKeypress);
     return () => {
       document.removeEventListener("keypress", onKeypress);
@@ -39,23 +39,19 @@ export default function Grid(props) {
   });
 
   return (
-    <div>
       <div style={{position: 'relative', width: 500,height: 520}}>
         <CellsField map={map} hexSize={hexSize}/>
-        <div>
           {map &&
-            map.map((hex) => (
+            map.map((hex, index) => (
               <Hex
                 value={hex.value}
                 x={hex.x}
                 y={hex.y}
                 z={hex.z}
                 hexSize={hexSize}
-                key={hex.index}
+                key={index}
               ></Hex>
             ))}
-        </div>
-      </div>
     </div>
   );
 }
