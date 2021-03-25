@@ -12,6 +12,7 @@ export default function App() {
     useEffect(() => {
         radiusClick(+location.hash.slice(-1))
     }, [location.hash])
+
     const radiusClick = (e) => {
         setRadius(e)
         setIsGameOver(false)
@@ -20,7 +21,6 @@ export default function App() {
     const handleChange = (e) => {
         setUrl(e.target.value)
     }
-    const buttons = [2, 3, 4]
     return (
         <Container>
             <div className="controls">
@@ -30,7 +30,7 @@ export default function App() {
                         <option id="localhost" value='http://localhost:13337/'>{'http://localhost:13337/'}</option>
                     </select>
                 </div>
-                {buttons.map((num) => <button className={activeBtn === num ? "active" : null} onClick={() => radiusClick(num)}>{num}</button>)}
+                {[2, 3, 4].map((num) => <button className={activeBtn === num ? "active" : null} onClick={() => radiusClick(num)}>{num}</button>)}
                 <div>
                     Game Status:{isGameOver
                         ? <span data-status="game-over">Game Over</span>
