@@ -2,7 +2,7 @@ import {addCeelsOnMap, generateMap, notEmptyCeels} from "../app/mapGenerator";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import "../App.css";
-import {gameover} from "../app/game_over";
+import { isGameOver } from "../app/isGameOver";
 import Hex from "./Hex";
 import {moveControler} from "../app/moveControl";
 import CellsField from "./CellsField";
@@ -21,14 +21,14 @@ export default function Grid(props) {
 
   useEffect(() => {
     function onKeypress(e) {
-      props.setIsGameOver(gameover(map));
+      props.setIsGameOver(isGameOver(map));
       let newMap = moveControler(map, props.radius, e.code);
       if (newMap !== false)
         axios
           .post(`${props.url}${props.radius}`, notEmptyCeels(newMap))
           .then((res) => {
             newMap = [...addCeelsOnMap(newMap, res.data)];
-            props.setIsGameOver(gameover(newMap));
+            props.setIsGameOver(isGameOver(newMap));
             setMap(newMap);
           });
     }

@@ -24,7 +24,7 @@ export function notEmptyCeels(map) {
     return map.filter(hex => hex.value !== 0)
 }
 
-export function emptyCeels(map) {
+export function isEmptyCeels(map) {
     return map.some(hex => hex.value === 0)
 }
 
